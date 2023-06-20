@@ -1,35 +1,46 @@
-import React, { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Select, MenuItem, FormControl, InputLabel, Grid } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Grid } from '@material-ui/core';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import { useUser } from '../../providers/UserProvider';
+import UserService from '../../services/UserServices';
 
-const ProfileModal = ({ open, user, onSave, onClose }) => {
-  const [name, setName] = useState(user.name);
-  const [age, setAge] = useState(user.age);
-  const [country, setCountry] = useState(user.country);
-  const [birthdate, setBirthdate] = useState(user.birthdate);
-  const [email, setEmail] = useState(user.email);
+const ProfileModal = ({ open, onClose }) => {
+  const { userDataInformation, setUserDataInformation } = useUser();
 
-  //lista com as opções dos paises
-  const countries = [
-    'Portugal',
-    'Brasil',
-    'Estados Unidos',
-    'Reino Unido',
-  ];
+  //Guarda os valores dos campos quando estes são alterados
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserDataInformation((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
+  };
 
   const handleSave = () => {
     const updatedUser = {
-      name,
-      age,
-      country,
-      birthdate,
-      email
+      name: userDataInformation.name,
+      email: userDataInformation.email,
+      fullname: userDataInformation.fullname,
+      phonenumber: userDataInformation.phonenumber,
+      birthdate: "",
+      country: userDataInformation.country
     };
-
-    onSave(updatedUser);
+    saveUserData(updatedUser)
     onClose();
   };
+
+  const saveUserData = async (userData) => {
+    try {
+      const response = await UserService.updateUserInformation(userData);
+      if (response.message) {
+        setUserDataInformation(response.message)
+        console.log(response)
+      }
+    } catch (error) {
+
+    }
+  }
 
   const handleCancel = () => {
     onClose();
@@ -43,50 +54,48 @@ const ProfileModal = ({ open, user, onSave, onClose }) => {
           <Grid item xs={12}>
             <TextField
               label="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              name="name"
+              value={userDataInformation.name}
+              onChange={handleInputChange}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Age"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
+              label="Phone Number"
+              name="phonenumber"
+              value={userDataInformation.age}
+              onChange={handleInputChange}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>Country</InputLabel>
-              <Select
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-              >
-                {countries.map((country) => (
-                  <MenuItem key={country} value={country}>
-                    {country}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <TextField
+              label="Country"
+              name="country"
+              value={userDataInformation.country}
+              onChange={handleInputChange}
+              fullWidth
+            />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <DatePicker
                 label="Birthday date"
-                value={birthdate}
-                onChange={setBirthdate}
+                name="birthdate"
+                value={userDataInformation.birthdate}
+                onChange={handleInputChange}
                 format="dd/MM/yyyy"
                 fullWidth
               />
             </MuiPickersUtilsProvider>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <TextField
               label="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={userDataInformation.email}
+              onChange={handleInputChange}
               fullWidth
             />
           </Grid>

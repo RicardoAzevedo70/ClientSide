@@ -1,9 +1,12 @@
 import React from 'react';
 import UserApp from './routes/UserApp';
+import UserProvider from './providers/UserProvider';
 
 const App = () => {
   return (
-    <UserApp/>
+    <UserProvider>
+      <UserApp/>      
+    </UserProvider>
   );
 };
 

@@ -8,13 +8,6 @@ const UserDropdownMenu = ({ username }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openLogout, setOpenLogout] = useState(false);
   const [openProfileUser, setOpenProfileUser] = useState(false);
-  const [user, setUser] = useState({
-    name: 'John Doe',
-    age: 30,
-    country: 'Portugal',
-    birthdate: new Date('1992-05-10'),
-    email: 'johndoe@example.com'
-  });
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -34,12 +27,6 @@ const UserDropdownMenu = ({ username }) => {
   const handleLogoutClick = () => {
     handleMenuClose();
     setOpenLogout(true);
-  };
-
-  const handleSaveProfile = (updatedUser) => {
-    setUser(updatedUser);
-    // Lógica adicional para salvar os dados atualizados do usuário
-    console.log('Dados do usuário atualizados:', updatedUser);
   };
 
   const handleOnCloseModal = () => {
@@ -86,7 +73,7 @@ const UserDropdownMenu = ({ username }) => {
         </Menu>
       </div>
       <LogoutApp open={openLogout} setOpen={setOpenLogout} />
-      <ProfileModal open={openProfileUser} user={user} onSave={handleSaveProfile} onClose={handleOnCloseModal} />
+      <ProfileModal open={openProfileUser} onClose={handleOnCloseModal} />
     </>
   );
 };

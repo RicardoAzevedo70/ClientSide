@@ -3,11 +3,13 @@ import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import { Menu, SportsFootball } from '@material-ui/icons';
 import UserDropdownMenu from './UserDropdownMenu';
 import Sidebar from './Sidebar';
-import ModalSelectTeam from './../pages/Select-Team/ModalSelectTeam'
+import ModalSelectTeam from '../pages/Select-Team/ModalSelectTeam'
+import {useUser} from '../providers/UserProvider';
 
 const TopBar = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [openModal, setOpenModal] = useState(true);
+  const { userDataInformation } = useUser();
 
   const handleToggleSidebar = () => {
     setOpenSidebar(!openSidebar);
@@ -43,7 +45,7 @@ const TopBar = () => {
             </Typography>
           </div>
           <div style={{ marginLeft: 'auto' }}>
-            <UserDropdownMenu username="Seu Nome de Usuário" />
+            <UserDropdownMenu username={userDataInformation.name} />
           </div>
         </Toolbar>
       </AppBar>

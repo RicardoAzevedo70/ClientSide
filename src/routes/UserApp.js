@@ -5,6 +5,7 @@ import PasswordRecoveryForm from '../pages/Password-Recovery/PasswordRecovery';
 import LogoutApp from '../pages/DropdownMenu-Options/Logout';
 import ProfileModal from '../pages/DropdownMenu-Options/UserAccoount';
 import MainPage from '../pages/Dashboard/KickOff';
+import TeamApp from './TeamApp';
 
 //tratar de fazer um componente para validar se esta ou nao autenticado
 //criar um ficheiro apenas para as equipas(colocar o id como identificador nas rotas)
@@ -20,6 +21,7 @@ const UserApp = () => {
           <Route exact path="/password-recovery" element={<PasswordRecoveryForm/>}/>
           <Route exact path="/logout" element={<LogoutApp/>}/>
           <Route exact path="/user-profile" element={<ProfileModal/>}/>
+          <Route path="/team/*" element={<TeamApp />} />
           <Route path="*" element={<Navigate to={"/login"}/>}/>
         </Routes>
       </div>

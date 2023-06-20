@@ -24,7 +24,7 @@ const Sidebar = ({ open, setOpen }) => {
     <Drawer variant="temporary" anchor="left" open={open} onClose={handleCloseSidebar}>
       <Typography variant="h6" align="center" style={{ marginBottom: '10px', backgroundColor: '#4F6D8F', color: 'white', padding: '10px', height: '50px' }}>Menu</Typography>
       <List>
-        <ListItem button component={Link} to="/ver-equipa" className={classes.listItem}>
+        <ListItem button component={Link} to="/team/team-players" className={classes.listItem}>
           <ListItemIcon>
             <Group />
           </ListItemIcon>
@@ -34,7 +34,7 @@ const Sidebar = ({ open, setOpen }) => {
           />
           <ChevronRight />
         </ListItem>
-        <ListItem button component={Link} to="/gestao-equipa" className={classes.listItem}>
+        <ListItem button component={Link} to="/team/team-managment" className={classes.listItem}>
           <ListItemIcon>
             <Settings />
           </ListItemIcon>
@@ -44,7 +44,7 @@ const Sidebar = ({ open, setOpen }) => {
           />
           <ChevronRight />
         </ListItem>
-        <ListItem button component={Link} to="/meus-jogos" className={classes.listItem}>
+        <ListItem button component={Link} to="/team/team-games" className={classes.listItem}>
           <ListItemIcon>
             <SportsFootball />
           </ListItemIcon>

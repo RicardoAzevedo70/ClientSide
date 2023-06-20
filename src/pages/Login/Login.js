@@ -2,26 +2,31 @@ import React, { useState } from 'react';
 import { Typography, TextField, Button, Container, Grid, Snackbar } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import Logo from './../../img/logo.png';
-import UserService from './../../Services/UserServices';
+import UserService from './../../services/UserServices';
+import { useUser } from '../../providers/UserProvider';
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [userInformation, setUserInformation] = useState({ email: '', password: '' });
-  const [token, setToken] = useState("");
+  const { setUserDataInformation, setCountries, setToken } = useUser();
 
   const handleLogin = async () => {
-    try {
-      const response = await UserService.login(userInformation);
-      if (response.token) {
-        setToken(response.token);
-        navigate('/kick-off');
-      } else {
-        navigate('/password-recovery');
-      }
-    } catch (error) {
+    // try {
+    //   const response = await UserService.login(userInformation);
+    //   if (response.token) {
+    //     setToken(response.token);
+    //     getUserInformation();
+    //     getAllCountry();
+    //     navigate('/kick-off');
+    //   } else {
+    //     navigate('/password-recovery');
+    //   }
+    // } catch (error) {
 
-    }
-    // navigate('/kick-off');
+    // }
+    getUserInformation()
+    // getAllCountry()
+    navigate('/kick-off');
   };
 
   const handleForgotPassword = () => {
@@ -34,6 +39,30 @@ const LoginForm = () => {
       ...prevCredentials,
       [name]: value,
     }));
+  };
+
+  //faz o pedido à API para ter os paises para apresentar no select. O pedido é feito incialmente devido ao tempo que é necessário para carregar todas as informações
+  const getAllCountry = async () => {
+    try {
+      const response = await UserService.getAllCountrys();
+      if (response) {
+        setCountries(response.message)
+      }
+    } catch (error) {
+      
+    }
+  };
+
+  const getUserInformation = async () => {
+    try {
+      const response = await UserService.getUserInformation("Josecid@gmail.com"); //userInformation.email
+      if (response) {
+        setUserDataInformation(response.message)
+        console.log(response)
+      }
+    } catch (error) {
+      
+    }
   };
 
   return (
