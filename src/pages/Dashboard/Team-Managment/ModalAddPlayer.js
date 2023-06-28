@@ -28,8 +28,8 @@ const AddPlayer = ({ open, onClose }) => {
 
   const addTeamPlayer = async () => {
     try {
-      const response = await TeamService.addTeamPlayer(teamSelected, playerEmail, token); //passar aqui o email do artista
-      if (response.message) {
+      const response = await TeamService.addTeamPlayer(playerEmail, teamSelected, token); //passar aqui o email do artista
+      if (response === 200) {
         getTeamPlayers()//fazer de novo o get dos jogadores para atualizar a lista
         setOpenSnackBar(true)
         setSnackBarInformation({severity: 'success', message: 'User added to the team!' })

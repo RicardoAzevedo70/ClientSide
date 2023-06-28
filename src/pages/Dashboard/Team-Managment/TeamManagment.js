@@ -52,9 +52,8 @@ const TeamManagement = () => {
   const { teamPlayers } = useTeam();
 
   const handleDelete = (id) => {
-    // Implement your logic to delete the record with the given id
     const player = teamPlayers.find((player) => player.id === id);
-    setPlayerToDelete(player.email)//adiciono o email do jogador a eliminar
+    setPlayerToDelete(player.email)
     setOpenDeletePlayer(true)
   };
 

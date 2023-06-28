@@ -54,12 +54,12 @@ const TeamService = {
             'Content-Type': 'application/json',
         },
         });
-        return response.data;
+        return response.status;
     } catch (error) {
         throw new Error('Error occurred during login');
     }
   },
-  removeTeamPlayer: async (name, remove_member, token) => {
+  removeTeamPlayer: async (remove_member, name, token) => {
     try {
         const requestData = { remove_member: remove_member, name: name };
         const response = await axios.post('http://localhost:7080/teams/removemember', requestData, {
@@ -68,7 +68,7 @@ const TeamService = {
             'Content-Type': 'application/json',
         },
         });
-        return response.data;
+        return response.status;
     } catch (error) {
         throw new Error('Error occurred during login');
     }

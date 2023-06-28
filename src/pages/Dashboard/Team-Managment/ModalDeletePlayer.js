@@ -22,8 +22,8 @@ const DeletePlayer = ({ open, onClose, playerToDelete, setPlayerToDelete }) => {
   
   const removeTeamPlayer = async () => {
     try {
-      const response = await TeamService.removeTeamPlayer(teamSelected, playerToDelete, token); //passar aqui o email do artista
-      if (response.message) {
+      const response = await TeamService.removeTeamPlayer(playerToDelete, teamSelected, token); //passar aqui o email do artista
+      if (response === 200) {
         getTeamPlayers() //se for removido com sucesso faço de novo o meu request para ir buscar os jogadores todos e atualizar a lista
         setOpenSnackBar(true)
         setSnackBarInformation({severity: 'error', message: 'User deleted from the team!' })
