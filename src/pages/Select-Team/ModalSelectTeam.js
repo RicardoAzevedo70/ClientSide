@@ -21,7 +21,7 @@ const ModalContent = ({ open, onClose }) => {
     if(teamPlayersResponse){
       prepareTeamPlayers()
     }
-  }, [teamPlayersResponse]);
+  }, [teamPlayersResponse]); //alterar isto para ficar identico ao que esta na modaladdplayer e modaldeleteplayer onde não 
 
   useEffect(() => {
     if(teamGamesResponse){
@@ -68,11 +68,11 @@ const ModalContent = ({ open, onClose }) => {
   const prepareTeamPlayers = () => {
     const players = [];
     teamPlayersResponse.forEach((item, index) => {
-      const { fullname } = item[0];
+      const { fullname, email } = item[0]; //passar aqui o email tambem, para depois ser possivel identificar quando estou a selecionar para eliminar
       const id = index + 1;
       const avatarUrl = `https://example.com/avatar${id}.jpg`;
   
-      const personData = { id, name: fullname, avatarUrl };
+      const personData = { id, name: fullname, avatarUrl, email: email }; //adicionar aqui o email tambem
       players.push(personData);
     });
     setTeamPlayers(players)

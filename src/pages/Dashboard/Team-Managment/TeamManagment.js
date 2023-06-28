@@ -48,10 +48,13 @@ const TeamManagement = () => {
   const classes = useStyles();
   const [openAddPlayer, setOpenAddPlayer] = useState(false)
   const [openDeletePlayer, setOpenDeletePlayer] = useState(false)
+  const [playerToDelete, setPlayerToDelete] = useState("")
   const { teamPlayers } = useTeam();
 
   const handleDelete = (id) => {
     // Implement your logic to delete the record with the given id
+    const player = teamPlayers.find((player) => player.id === id);
+    setPlayerToDelete(player.email)//adiciono o email do jogador a eliminar
     setOpenDeletePlayer(true)
   };
 
@@ -103,7 +106,7 @@ const TeamManagement = () => {
       </Table>
     </TableContainer>
     <AddPlayer open={openAddPlayer} onClose={handleOnCloseModal}/>
-    <DeletePlayer open={openDeletePlayer} onClose={handleOnCloseModalDelete}/>
+    <DeletePlayer open={openDeletePlayer} onClose={handleOnCloseModalDelete} playerToDelete={playerToDelete} setPlayerToDelete={setPlayerToDelete}/>
     </>
   );
 };
