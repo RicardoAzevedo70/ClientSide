@@ -30,7 +30,7 @@ const Sidebar = ({ open, setOpen }) => {
           </ListItemIcon>
           <ListItemText
             primaryTypographyProps={{ className: classes.listItemText }}
-            primary="Ver Equipa"
+            primary="See Team Players"
           />
           <ChevronRight />
         </ListItem>
@@ -40,7 +40,7 @@ const Sidebar = ({ open, setOpen }) => {
           </ListItemIcon>
           <ListItemText
             primaryTypographyProps={{ className: classes.listItemText }}
-            primary="Gestão Equipa"
+            primary="Team Management"
           />
           <ChevronRight />
         </ListItem>
@@ -50,7 +50,7 @@ const Sidebar = ({ open, setOpen }) => {
           </ListItemIcon>
           <ListItemText
             primaryTypographyProps={{ className: classes.listItemText }}
-            primary="Meus Jogos"
+            primary="My Team Games"
           />
           <ChevronRight />
         </ListItem>
