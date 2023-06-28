@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar } from '@material-ui/core';
+import { useTeam } from '../../../providers/TeamProvider';
 
 const useStyles = makeStyles({
   tableContainer: {
@@ -28,13 +29,7 @@ const useStyles = makeStyles({
 
 const TeamPlayers = () => {
   const classes = useStyles();
-
-  const peopleData = [
-    { id: 1, name: 'John Doe', avatarUrl: 'https://example.com/avatar1.jpg' },
-    { id: 2, name: 'Jane Smith', avatarUrl: 'https://example.com/avatar2.jpg' },
-    { id: 3, name: 'Alice Johnson', avatarUrl: 'https://example.com/avatar3.jpg' },
-    // Add more people data as needed
-  ];
+  const { teamPlayers } = useTeam();
 
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
@@ -46,7 +41,7 @@ const TeamPlayers = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {peopleData.map((person) => (
+          {teamPlayers.map((person) => (
             <TableRow key={person.id}>
               <TableCell className={classes.photoRowCell}>
                 <Avatar alt={person.name} src={person.avatarUrl} className={classes.avatar} />

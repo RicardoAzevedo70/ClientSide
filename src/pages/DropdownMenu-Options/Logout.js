@@ -1,15 +1,19 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from '../../providers/UserProvider';
 
 const LogoutApp = ({ open, setOpen }) => {
   const navigate = useNavigate();
+  const {setUserDataInformation, setToken} = useUser();
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleLogout = () => {
     setOpen(false);
+    setUserDataInformation({})
+    setToken("")
     navigate('/login');
   };
 

@@ -30,7 +30,6 @@ const UserDropdownMenu = ({ username }) => {
   };
 
   const handleOnCloseModal = () => {
-    // Lógica para abrir a modal de edição do perfil
     setOpenProfileUser(false)
   };
 

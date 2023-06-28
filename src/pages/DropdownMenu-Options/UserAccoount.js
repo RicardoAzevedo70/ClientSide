@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Grid } from '@material-ui/core';
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Grid, Select, MenuItem, InputLabel } from '@material-ui/core';
 import { useUser } from '../../providers/UserProvider';
 import UserService from '../../services/UserServices';
+import { useTeam } from '../../providers/TeamProvider';
+import { useComponents } from '../../providers/ComponentsProvider';
 
 const ProfileModal = ({ open, onClose }) => {
   const { userDataInformation, setUserDataInformation } = useUser();
+  const [selectedCountry, setSelectedCountry] = useState();
+  const { countries } = useTeam();
+  const { setOpenSnackBar, setSnackBarInformation } = useComponents();
 
-  //Guarda os valores dos campos quando estes são alterados
+  // Guarda os valores dos campos quando estes são alterados
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserDataInformation((prevCredentials) => ({
       ...prevCredentials,
       [name]: value,
     }));
+  };
+
+  const handleCountryChange = (event) => {
+    setSelectedCountry(event.target.value);
   };
 
   const handleSave = () => {
@@ -24,7 +31,7 @@ const ProfileModal = ({ open, onClose }) => {
       fullname: userDataInformation.fullname,
       phonenumber: userDataInformation.phonenumber,
       birthdate: "",
-      country: userDataInformation.country
+      country: selectedCountry
     };
     saveUserData(updatedUser)
     onClose();
@@ -34,13 +41,25 @@ const ProfileModal = ({ open, onClose }) => {
     try {
       const response = await UserService.updateUserInformation(userData);
       if (response.message) {
-        setUserDataInformation(response.message)
-        console.log(response)
+        getUserInformation()
+        setOpenSnackBar(true)
+        setSnackBarInformation({severity: 'success', message: 'Updated user data!' })
       }
     } catch (error) {
-
+      setSnackBarInformation({severity: 'error', message: 'Something goes wrong!' })
     }
   }
+
+  const getUserInformation = async () => {
+    try {
+      const response = await UserService.getUserInformation(userDataInformation.email); 
+      if (response) {
+        setUserDataInformation(response.message)
+      }
+    } catch (error) {
+      
+    }
+  };
 
   const handleCancel = () => {
     onClose();
@@ -64,32 +83,26 @@ const ProfileModal = ({ open, onClose }) => {
             <TextField
               label="Phone Number"
               name="phonenumber"
-              value={userDataInformation.age}
+              value={userDataInformation.phonenumber}
               onChange={handleInputChange}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-          <TextField
-              label="Country"
+            <InputLabel>Country</InputLabel>
+            <Select
               name="country"
               value={userDataInformation.country}
-              onChange={handleInputChange}
+              onChange={handleCountryChange}
               fullWidth
-            />
+            >
+              {countries.map((country) => (
+                <MenuItem key={country} value={country}>
+                  {country}
+                </MenuItem>
+              ))}
+            </Select>
           </Grid>
-          {/* <Grid item xs={12}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <DatePicker
-                label="Birthday date"
-                name="birthdate"
-                value={userDataInformation.birthdate}
-                onChange={handleInputChange}
-                format="dd/MM/yyyy"
-                fullWidth
-              />
-            </MuiPickersUtilsProvider>
-          </Grid> */}
           <Grid item xs={12}>
             <TextField
               label="Email"
@@ -110,6 +123,7 @@ const ProfileModal = ({ open, onClose }) => {
         </Button>
       </DialogActions>
     </Dialog>
+    
   );
 };
 

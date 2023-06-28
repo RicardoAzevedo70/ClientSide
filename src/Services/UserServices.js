@@ -34,7 +34,6 @@ const UserService = {
 
   // getUserInformation: async (email) => {
   //   try {
-  //     debugger
   //       const response = await fetch('http://localhost:3000/auth/userinformation', {
   //         method: 'post',
   //         headers: {
@@ -67,7 +66,6 @@ const UserService = {
 
   // updateUserInformation: async (userInformation) => {
   //   try {
-  //     debugger
   //       const response = await fetch('http://localhost:3000/auth/updateuserinformation', {
   //         method: 'post',
   //         headers: {
@@ -83,14 +81,12 @@ const UserService = {
   // },
   updateUserInformation: async (userInformation) => {
     try {
-      debugger
       const response = await axios.put('http://localhost:3000/auth/updateuserinformation', userInformation);
       return response.data;
     } catch (error) {
       throw new Error('Error occurred during login');
     }
   },
-
 
   getAllCountrys: async () => {
     try {

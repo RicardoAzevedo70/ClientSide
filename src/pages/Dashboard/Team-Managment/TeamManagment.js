@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, IconButton, Fab } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
+import { useTeam } from '../../../providers/TeamProvider';
+import AddPlayer from './ModalAddPlayer';
+import DeletePlayer from './ModalDeletePlayer';
 
 const useStyles = makeStyles({
   tableContainer: {
@@ -43,25 +46,29 @@ const useStyles = makeStyles({
 
 const TeamManagement = () => {
   const classes = useStyles();
-
-  const peopleData = [
-    { id: 1, name: 'John Doe', avatarUrl: 'https://example.com/avatar1.jpg' },
-    { id: 2, name: 'Jane Smith', avatarUrl: 'https://example.com/avatar2.jpg' },
-    { id: 3, name: 'Alice Johnson', avatarUrl: 'https://example.com/avatar3.jpg' },
-    // Add more people data as needed
-  ];
+  const [openAddPlayer, setOpenAddPlayer] = useState(false)
+  const [openDeletePlayer, setOpenDeletePlayer] = useState(false)
+  const { teamPlayers } = useTeam();
 
   const handleDelete = (id) => {
     // Implement your logic to delete the record with the given id
-    console.log(`Deleting record with id ${id}`);
+    setOpenDeletePlayer(true)
   };
 
   const handleAdd = () => {
-    // Implement your logic to add a new record
-    console.log('Adding a new record');
+    setOpenAddPlayer(true)
+  };
+
+  const handleOnCloseModal = () => {
+    setOpenAddPlayer(false)
+  };
+
+  const handleOnCloseModalDelete = () => {
+    setOpenDeletePlayer(false)
   };
 
   return (
+    <>
     <TableContainer component={Paper} className={classes.tableContainer}>
       <Fab color="primary" aria-label="add" className={classes.addButton} onClick={handleAdd}>
         <AddIcon />
@@ -75,7 +82,7 @@ const TeamManagement = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {peopleData.map((person) => (
+          {teamPlayers.map((person) => (
             <TableRow key={person.id}>
               <TableCell className={classes.photoRowCell}>
                 <Avatar alt={person.name} src={person.avatarUrl} className={classes.avatar} />
@@ -95,6 +102,9 @@ const TeamManagement = () => {
         </TableBody>
       </Table>
     </TableContainer>
+    <AddPlayer open={openAddPlayer} onClose={handleOnCloseModal}/>
+    <DeletePlayer open={openDeletePlayer} onClose={handleOnCloseModalDelete}/>
+    </>
   );
 };
 

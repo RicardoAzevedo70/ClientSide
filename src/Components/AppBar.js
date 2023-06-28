@@ -5,11 +5,13 @@ import UserDropdownMenu from './UserDropdownMenu';
 import Sidebar from './Sidebar';
 import ModalSelectTeam from '../pages/Select-Team/ModalSelectTeam'
 import {useUser} from '../providers/UserProvider';
+import { useTeam } from '../providers/TeamProvider';
 
 const TopBar = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [openModal, setOpenModal] = useState(true);
   const { userDataInformation } = useUser();
+  const { teamSelected } = useTeam();
 
   const handleToggleSidebar = () => {
     setOpenSidebar(!openSidebar);
@@ -21,11 +23,6 @@ const TopBar = () => {
 
   const handleCloseModal = () => {
     setOpenModal(false);
-  };
-
-  const handleSave = (selectedCountry) => {
-    // Fechar a modal
-    handleCloseModal();
   };
 
 
@@ -41,7 +38,7 @@ const TopBar = () => {
               <SportsFootball style={{ color: 'white', marginLeft: '10px', marginRight: '10px' }} />
             </IconButton>
             <Typography variant="h6" style={{ color: 'white' }}>
-              F.C. Porto
+            {teamSelected}
             </Typography>
           </div>
           <div style={{ marginLeft: 'auto' }}>
@@ -50,7 +47,7 @@ const TopBar = () => {
         </Toolbar>
       </AppBar>
       <Sidebar open={openSidebar} setOpen={setOpenSidebar} />
-      <ModalSelectTeam open={openModal} onClose={handleCloseModal} onSave={handleSave} />
+      <ModalSelectTeam open={openModal} onClose={handleCloseModal} />
     </>
   );
 };

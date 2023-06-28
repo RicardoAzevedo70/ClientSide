@@ -4,29 +4,36 @@ import { useNavigate } from 'react-router-dom';
 import Logo from './../../img/logo.png';
 import UserService from './../../services/UserServices';
 import { useUser } from '../../providers/UserProvider';
+import { useTeam } from '../../providers/TeamProvider';
+import { useComponents } from '../../providers/ComponentsProvider';
+import SnackBar from '../../components/SnackBar';
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [userInformation, setUserInformation] = useState({ email: '', password: '' });
-  const { setUserDataInformation, setCountries, setToken } = useUser();
+  const { setUserDataInformation, setToken } = useUser();
+  const { setCountries } = useTeam();
+  const { openSnackBar, setOpenSnackBar, snackBarInformation, setSnackBarInformation } = useComponents();
 
   const handleLogin = async () => {
-    // try {
-    //   const response = await UserService.login(userInformation);
-    //   if (response.token) {
-    //     setToken(response.token);
-    //     getUserInformation();
-    //     getAllCountry();
-    //     navigate('/kick-off');
-    //   } else {
-    //     navigate('/password-recovery');
-    //   }
-    // } catch (error) {
-
-    // }
-    getUserInformation()
-    // getAllCountry()
-    navigate('/kick-off');
+    try {
+      const response = await UserService.login(userInformation);
+      if (response.token) {
+        setToken(response.token);
+        getUserInformation();
+        //getAllCountry();
+        setOpenSnackBar(true)
+        setSnackBarInformation({severity: 'success', message: 'Successful login' })
+        navigate('/kick-off');
+      } else {
+        setOpenSnackBar(true)
+        setSnackBarInformation({severity: 'error', message: 'Login failed!' })
+      }
+    } catch (error) {
+      setOpenSnackBar(true)
+      setSnackBarInformation({severity: 'error', message: 'Login failed!' })
+    }
+    // navigate('/kick-off');
   };
 
   const handleForgotPassword = () => {
@@ -41,7 +48,6 @@ const LoginForm = () => {
     }));
   };
 
-  //faz o pedido à API para ter os paises para apresentar no select. O pedido é feito incialmente devido ao tempo que é necessário para carregar todas as informações
   const getAllCountry = async () => {
     try {
       const response = await UserService.getAllCountrys();
@@ -114,6 +120,7 @@ const LoginForm = () => {
             </Button>
           </form>
         </Container>
+        <SnackBar open={openSnackBar} onClose={setOpenSnackBar} severity={snackBarInformation.severity} message={snackBarInformation.message}/>
       </div>
     </div>
   );
