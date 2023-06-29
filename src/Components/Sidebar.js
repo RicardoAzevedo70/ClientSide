@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography, makeStyles } from '@material-ui/core';
 import { Group, Settings, SportsFootball, ChevronRight } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -58,5 +59,10 @@ const Sidebar = ({ open, setOpen }) => {
     </Drawer>
   );
 };
+
+Sidebar.propTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func
+}
 
 export default Sidebar;

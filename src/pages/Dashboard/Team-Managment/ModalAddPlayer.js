@@ -4,6 +4,7 @@ import TeamService from '../../../services/TeamService';
 import { useUser } from '../../../providers/UserProvider';
 import { useTeam } from '../../../providers/TeamProvider';
 import { useComponents } from '../../../providers/ComponentsProvider';
+import PropTypes from 'prop-types';
 
 const AddPlayer = ({ open, onClose }) => {
   const [playerEmail, setPlayerEmail] = useState('');
@@ -83,5 +84,10 @@ const AddPlayer = ({ open, onClose }) => {
     </Dialog>
   );
 };
+
+AddPlayer.propTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func
+}
 
 export default AddPlayer;

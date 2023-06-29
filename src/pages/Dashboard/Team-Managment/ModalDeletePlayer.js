@@ -4,6 +4,7 @@ import TeamService from '../../../services/TeamService';
 import { useUser } from '../../../providers/UserProvider';
 import { useTeam } from '../../../providers/TeamProvider';
 import { useComponents } from '../../../providers/ComponentsProvider';
+import PropTypes from 'prop-types';
 
 const DeletePlayer = ({ open, onClose, playerToDelete, setPlayerToDelete }) => {
   const { token } = useUser();
@@ -67,5 +68,12 @@ const DeletePlayer = ({ open, onClose, playerToDelete, setPlayerToDelete }) => {
     </Dialog>
   );
 };
+
+DeletePlayer.propTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
+  playerToDelete: PropTypes.string,
+  setPlayerToDelete: PropTypes.func
+}
 
 export default DeletePlayer;

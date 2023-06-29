@@ -4,6 +4,7 @@ import { useUser } from '../../providers/UserProvider';
 import UserService from '../../services/UserServices';
 import { useTeam } from '../../providers/TeamProvider';
 import { useComponents } from '../../providers/ComponentsProvider';
+import PropTypes from 'prop-types';
 
 const ProfileModal = ({ open, onClose }) => {
   const { userDataInformation, setUserDataInformation } = useUser();
@@ -126,5 +127,10 @@ const ProfileModal = ({ open, onClose }) => {
     
   );
 };
+
+ProfileModal.propTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func
+}
 
 export default ProfileModal;

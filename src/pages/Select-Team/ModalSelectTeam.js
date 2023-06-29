@@ -3,6 +3,7 @@ import { Button, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogAct
 import TeamService from '../../services/TeamService';
 import { useUser } from '../../providers/UserProvider';
 import { useTeam } from '../../providers/TeamProvider';
+import PropTypes from 'prop-types';
 
 const ModalContent = ({ open, onClose }) => {
   const [teamOptions, setTeamOptions] = useState([]);
@@ -127,5 +128,10 @@ const ModalContent = ({ open, onClose }) => {
     </Dialog>
   );
 };
+
+ModalContent.propTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func
+}
 
 export default ModalContent;

@@ -3,6 +3,7 @@ import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import { AccountCircle, ArrowDropDown } from '@material-ui/icons';
 import LogoutApp from '../pages/DropdownMenu-Options/Logout';
 import ProfileModal from '../pages/DropdownMenu-Options/UserAccoount';
+import PropTypes from 'prop-types';
 
 const UserDropdownMenu = ({ username }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -76,5 +77,9 @@ const UserDropdownMenu = ({ username }) => {
     </>
   );
 };
+
+UserDropdownMenu.propTypes = {
+  username: PropTypes.string
+}
 
 export default UserDropdownMenu;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import PropTypes from 'prop-types';
 
 const SnackBar = ({ open, onClose, message, severity }) => {
   const handleCloseSnackBar = (event, reason) => {
@@ -21,5 +22,12 @@ const SnackBar = ({ open, onClose, message, severity }) => {
     </div>
   );
 };
+
+SnackBar.propTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
+  message: PropTypes.string,
+  severity: PropTypes.string
+}
 
 export default SnackBar;

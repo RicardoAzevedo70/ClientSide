@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../providers/UserProvider';
+import PropTypes from 'prop-types';
 
 const LogoutApp = ({ open, setOpen }) => {
   const navigate = useNavigate();
@@ -36,5 +37,10 @@ const LogoutApp = ({ open, setOpen }) => {
     </Dialog>
   );
 };
+
+LogoutApp.propTypes = {
+  open: PropTypes.bool,
+  setOpen: PropTypes.func
+}
 
 export default LogoutApp;
