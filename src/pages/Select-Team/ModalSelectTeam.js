@@ -7,8 +7,6 @@ import PropTypes from 'prop-types';
 
 const ModalContent = ({ open, onClose }) => {
   const [teamOptions, setTeamOptions] = useState([]);
-  const [teamPlayersResponse, setTeamPlayersResponse] = useState([]);
-  const [teamGamesResponse, setTeamGamesResponse] = useState([]);
   const { userDataInformation, token } = useUser();
   const { teamSelected, setTeamSelected, setTeamPlayers, setTeamGames } = useTeam();
 
@@ -17,18 +15,6 @@ const ModalContent = ({ open, onClose }) => {
       getCaptainTeams()
     }
   }, [open]);
-
-  useEffect(() => {
-    if(teamPlayersResponse){
-      prepareTeamPlayers()
-    }
-  }, [teamPlayersResponse]); //alterar isto para ficar identico ao que esta na modaladdplayer e modaldeleteplayer onde não 
-
-  useEffect(() => {
-    if(teamGamesResponse){
-      prepareTeamGames()
-    }
-  }, [teamGamesResponse]);
 
   const handleCountryChange = (event) => {
     setTeamSelected(event.target.value);
@@ -55,16 +41,16 @@ const ModalContent = ({ open, onClose }) => {
     try {
       const response = await TeamService.getListTeamPlayers(teamSelected, token);
       if (response.message) {
-        setTeamPlayersResponse(response.message)
+        prepareTeamPlayers(response.message)
       }
     } catch (error) {
 
     }
   };
 
-  const prepareTeamPlayers = () => {
+  const prepareTeamPlayers = (teamPlayers) => {
     const players = [];
-    teamPlayersResponse.forEach((item, index) => {
+    teamPlayers.forEach((item, index) => {
       const { fullname, email } = item[0]; //passar aqui o email tambem, para depois ser possivel identificar quando estou a selecionar para eliminar
       const id = index + 1;
       const avatarUrl = `https://example.com/avatar${id}.jpg`;
@@ -79,18 +65,16 @@ const ModalContent = ({ open, onClose }) => {
     try {
       const response = await TeamService.getListTeamsGames(teamSelected, token);
       if (response.message) {
-        setTeamGamesResponse(response.message)
-      } else {
-        
+        prepareTeamGames(response.message)
       }
     } catch (error) {
 
     }
   };
 
-  const prepareTeamGames = () => {
+  const prepareTeamGames = (teamGames) => {
     const games = [];
-    teamGamesResponse.forEach((item, index) => {
+    teamGames.forEach((item, index) => {
       const { idTeam1, idTeam2 } = item;
       const id = index + 1;
       const team1Name = idTeam1;
