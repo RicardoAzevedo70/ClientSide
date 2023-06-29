@@ -45,8 +45,6 @@ const ModalContent = ({ open, onClose }) => {
       const response = await TeamService.getCaptainListTeams(userDataInformation.name, token);
       if (response.message) {
         setTeamOptions(response.message)
-      } else {
-        
       }
     } catch (error) {
 
@@ -58,8 +56,6 @@ const ModalContent = ({ open, onClose }) => {
       const response = await TeamService.getListTeamPlayers(teamSelected, token);
       if (response.message) {
         setTeamPlayersResponse(response.message)
-      } else {
-        
       }
     } catch (error) {
 

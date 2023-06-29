@@ -109,15 +109,6 @@ const LoginForm = () => {
             <Button variant="contained" color="#F8F8F8" fullWidth onClick={handleLogin}>
               Login
             </Button>
-            <Button
-              variant="outlined"
-              color="#F8F8F8"
-              fullWidth
-              onClick={handleForgotPassword}
-              style={{ marginTop: '16px' }}
-            >
-              Forgot Password
-            </Button>
           </form>
         </Container>
         <SnackBar open={openSnackBar} onClose={setOpenSnackBar} severity={snackBarInformation.severity} message={snackBarInformation.message}/>
