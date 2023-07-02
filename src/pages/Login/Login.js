@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, TextField, Button, Container, Grid, Snackbar } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
-import Logo from './../../img/logo.png';
+import Logo2 from './../../img/logoSemFundo.jpeg'
 import UserService from './../../services/UserServices';
 import { useUser } from '../../providers/UserProvider';
 import { useTeam } from '../../providers/TeamProvider';
@@ -21,7 +21,7 @@ const LoginForm = () => {
       if (response.token) {
         setToken(response.token);
         getUserInformation();
-        //getAllCountry();
+        getAllCountry();
         setOpenSnackBar(true)
         setSnackBarInformation({severity: 'success', message: 'Successful login' })
         navigate('/kick-off');
@@ -29,15 +29,12 @@ const LoginForm = () => {
         setOpenSnackBar(true)
         setSnackBarInformation({severity: 'error', message: 'Login failed!' })
       }
+      // navigate('/kick-off');
+
     } catch (error) {
       setOpenSnackBar(true)
       setSnackBarInformation({severity: 'error', message: 'Login failed!' })
     }
-    // navigate('/kick-off');
-  };
-
-  const handleForgotPassword = () => {
-    navigate('/password-recovery');
   };
 
   const handleInputChange = (event) => {
@@ -74,7 +71,7 @@ const LoginForm = () => {
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
       <div style={{ flex: '70%', backgroundColor: '#F8F8F8', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <img src={Logo} alt='logotipo' style={{ width: '40%' }} />
+        <img src={Logo2} alt='logotipo' style={{ width: '40%' }} />
       </div>
       <div style={{ flex: '30%', backgroundColor: '#4F6D8F', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Container maxWidth="xs" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '25px' }}>

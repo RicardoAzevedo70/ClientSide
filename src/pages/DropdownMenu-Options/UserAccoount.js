@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 const ProfileModal = ({ open, onClose }) => {
   const { userDataInformation, setUserDataInformation } = useUser();
+  const [formData, setFormData] = useState({});
   const [selectedCountry, setSelectedCountry] = useState();
   const { countries } = useTeam();
   const { setOpenSnackBar, setSnackBarInformation } = useComponents();
@@ -15,8 +16,8 @@ const ProfileModal = ({ open, onClose }) => {
   // Guarda os valores dos campos quando estes são alterados
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setUserDataInformation((prevCredentials) => ({
-      ...prevCredentials,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: value,
     }));
   };
@@ -27,14 +28,14 @@ const ProfileModal = ({ open, onClose }) => {
 
   const handleSave = () => {
     const updatedUser = {
-      name: userDataInformation.name,
-      email: userDataInformation.email,
-      fullname: userDataInformation.fullname,
-      phonenumber: userDataInformation.phonenumber,
+      name: formData.name || userDataInformation.name,
+      email: formData.email || userDataInformation.email,
+      fullname: formData.fullname || userDataInformation.fullname,
+      phonenumber: formData.phonenumber || userDataInformation.phonenumber,
       birthdate: "",
-      country: selectedCountry
+      country: selectedCountry,
     };
-    saveUserData(updatedUser)
+    saveUserData(updatedUser);
     onClose();
   };
 
@@ -42,27 +43,34 @@ const ProfileModal = ({ open, onClose }) => {
     try {
       const response = await UserService.updateUserInformation(userData);
       if (response.message) {
-        getUserInformation()
-        setOpenSnackBar(true)
-        setSnackBarInformation({severity: 'success', message: 'Updated user data!' })
+        getUserInformation();
+        setOpenSnackBar(true);
+        setSnackBarInformation({ severity: 'success', message: 'Updated user data!' });
+      }else{
+        setOpenSnackBar(true);
+        setSnackBarInformation({ severity: 'error', message: 'Something goes wrong!' });
+        setFormData(userDataInformation);
       }
     } catch (error) {
-      setSnackBarInformation({severity: 'error', message: 'Something goes wrong!' })
+      setOpenSnackBar(true);
+      setSnackBarInformation({ severity: 'error', message: 'Something goes wrong!' });
+      setFormData(userDataInformation);
     }
-  }
+  };
 
   const getUserInformation = async () => {
     try {
-      const response = await UserService.getUserInformation(userDataInformation.email); 
+      const response = await UserService.getUserInformation(userDataInformation.email);
       if (response) {
-        setUserDataInformation(response.message)
+        setUserDataInformation(response.message);
       }
     } catch (error) {
-      
+
     }
   };
 
   const handleCancel = () => {
+    setFormData(userDataInformation);
     onClose();
   };
 
@@ -75,7 +83,7 @@ const ProfileModal = ({ open, onClose }) => {
             <TextField
               label="Name"
               name="name"
-              value={userDataInformation.name}
+              value={formData.name || userDataInformation.name}
               onChange={handleInputChange}
               fullWidth
             />
@@ -84,7 +92,7 @@ const ProfileModal = ({ open, onClose }) => {
             <TextField
               label="Phone Number"
               name="phonenumber"
-              value={userDataInformation.phonenumber}
+              value={formData.phonenumber || userDataInformation.phonenumber}
               onChange={handleInputChange}
               fullWidth
             />
@@ -93,7 +101,7 @@ const ProfileModal = ({ open, onClose }) => {
             <InputLabel>Country</InputLabel>
             <Select
               name="country"
-              value={userDataInformation.country}
+              value={formData.country || userDataInformation.country}
               onChange={handleCountryChange}
               fullWidth
             >
@@ -108,7 +116,7 @@ const ProfileModal = ({ open, onClose }) => {
             <TextField
               label="Email"
               name="email"
-              value={userDataInformation.email}
+              value={formData.email || userDataInformation.email}
               onChange={handleInputChange}
               fullWidth
             />
@@ -124,7 +132,6 @@ const ProfileModal = ({ open, onClose }) => {
         </Button>
       </DialogActions>
     </Dialog>
-    
   );
 };
 
