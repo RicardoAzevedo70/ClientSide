@@ -30,7 +30,6 @@ const LoginForm = () => {
         setSnackBarInformation({severity: 'error', message: 'Login failed!' })
       }
       // navigate('/kick-off');
-
     } catch (error) {
       setOpenSnackBar(true)
       setSnackBarInformation({severity: 'error', message: 'Login failed!' })

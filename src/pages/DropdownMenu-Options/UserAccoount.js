@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 const ProfileModal = ({ open, onClose }) => {
   const { userDataInformation, setUserDataInformation } = useUser();
   const [formData, setFormData] = useState({});
-  const [selectedCountry, setSelectedCountry] = useState();
   const { countries } = useTeam();
   const { setOpenSnackBar, setSnackBarInformation } = useComponents();
 
@@ -22,10 +21,6 @@ const ProfileModal = ({ open, onClose }) => {
     }));
   };
 
-  const handleCountryChange = (event) => {
-    setSelectedCountry(event.target.value);
-  };
-
   const handleSave = () => {
     const updatedUser = {
       name: formData.name || userDataInformation.name,
@@ -33,7 +28,7 @@ const ProfileModal = ({ open, onClose }) => {
       fullname: formData.fullname || userDataInformation.fullname,
       phonenumber: formData.phonenumber || userDataInformation.phonenumber,
       birthdate: "",
-      country: selectedCountry,
+      country: formData.country || userDataInformation.country
     };
     saveUserData(updatedUser);
     onClose();
@@ -102,7 +97,7 @@ const ProfileModal = ({ open, onClose }) => {
             <Select
               name="country"
               value={formData.country || userDataInformation.country}
-              onChange={handleCountryChange}
+              onChange={handleInputChange}
               fullWidth
             >
               {countries.map((country) => (

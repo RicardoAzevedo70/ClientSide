@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, IconButton, Fab } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, IconButton, Fab, TablePagination } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { useTeam } from '../../../providers/TeamProvider';
@@ -46,66 +46,80 @@ const useStyles = makeStyles({
 
 const TeamManagement = () => {
   const classes = useStyles();
-  const [openAddPlayer, setOpenAddPlayer] = useState(false)
-  const [openDeletePlayer, setOpenDeletePlayer] = useState(false)
-  const [playerToDelete, setPlayerToDelete] = useState("")
+  const [openAddPlayer, setOpenAddPlayer] = useState(false);
+  const [openDeletePlayer, setOpenDeletePlayer] = useState(false);
+  const [playerToDelete, setPlayerToDelete] = useState("");
   const { teamPlayers } = useTeam();
+  const [page, setPage] = useState(0);
+  const rowsPerPage = 8;
+  
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
   const handleDelete = (id) => {
     const player = teamPlayers.find((player) => player.id === id);
-    setPlayerToDelete(player.email)
-    setOpenDeletePlayer(true)
+    setPlayerToDelete(player.email);
+    setOpenDeletePlayer(true);
   };
 
   const handleAdd = () => {
-    setOpenAddPlayer(true)
+    setOpenAddPlayer(true);
   };
 
   const handleOnCloseModal = () => {
-    setOpenAddPlayer(false)
+    setOpenAddPlayer(false);
   };
 
   const handleOnCloseModalDelete = () => {
-    setOpenDeletePlayer(false)
+    setOpenDeletePlayer(false);
   };
 
   return (
     <>
-    <TableContainer component={Paper} className={classes.tableContainer}>
-      <Fab color="primary" aria-label="add" className={classes.addButton} onClick={handleAdd}>
-        <AddIcon />
-      </Fab>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell className={classes.photoCell}>Photo</TableCell>
-            <TableCell className={classes.homeTeamCell}>Name</TableCell>
-            <TableCell className={classes.photoCell}></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {teamPlayers.map((person) => (
-            <TableRow key={person.id}>
-              <TableCell className={classes.photoRowCell}>
-                <Avatar alt={person.name} src={person.avatarUrl} className={classes.avatar} />
-              </TableCell>
-              <TableCell>{person.name}</TableCell>
-              <TableCell className={classes.deleteCell}>
-                <IconButton
-                  aria-label="delete"
-                  onClick={() => handleDelete(person.id)}
-                  className={classes.deleteIcon}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </TableCell>
+      <TableContainer component={Paper} className={classes.tableContainer}>
+        <Fab color="primary" aria-label="add" className={classes.addButton} onClick={handleAdd}>
+          <AddIcon />
+        </Fab>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.photoCell}>Photo</TableCell>
+              <TableCell className={classes.homeTeamCell}>Name</TableCell>
+              <TableCell className={classes.photoCell}></TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    <AddPlayer open={openAddPlayer} onClose={handleOnCloseModal}/>
-    <DeletePlayer open={openDeletePlayer} onClose={handleOnCloseModalDelete} playerToDelete={playerToDelete} setPlayerToDelete={setPlayerToDelete}/>
+          </TableHead>
+          <TableBody>
+            {(teamPlayers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)).map((person) => (
+              <TableRow key={person.id}>
+                <TableCell className={classes.photoRowCell}>
+                  <Avatar alt={person.name} src={person.avatarUrl} className={classes.avatar} />
+                </TableCell>
+                <TableCell>{person.name}</TableCell>
+                <TableCell className={classes.deleteCell}>
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleDelete(person.id)}
+                    className={classes.deleteIcon}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <TablePagination
+          rowsPerPageOptions={[]}
+          component="div"
+          count={teamPlayers.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+        />
+      </TableContainer>
+      <AddPlayer open={openAddPlayer} onClose={handleOnCloseModal} />
+      <DeletePlayer open={openDeletePlayer} onClose={handleOnCloseModalDelete} playerToDelete={playerToDelete} setPlayerToDelete={setPlayerToDelete} />
     </>
   );
 };

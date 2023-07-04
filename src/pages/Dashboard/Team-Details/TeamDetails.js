@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, TablePagination } from '@material-ui/core';
 import { useTeam } from '../../../providers/TeamProvider';
 
 const useStyles = makeStyles({
@@ -24,12 +24,20 @@ const useStyles = makeStyles({
   },
   photoRowCell: {
     width: '200px',
-  }
+  },
 });
+
+const rowsPerPage = 8;
 
 const TeamPlayers = () => {
   const classes = useStyles();
   const { teamPlayers } = useTeam();
+
+  const [page, setPage] = useState(0);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
@@ -41,7 +49,7 @@ const TeamPlayers = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {teamPlayers.map((person) => (
+          {(teamPlayers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)).map((person) => (
             <TableRow key={person.id}>
               <TableCell className={classes.photoRowCell}>
                 <Avatar alt={person.name} src={person.avatarUrl} className={classes.avatar} />
@@ -51,6 +59,14 @@ const TeamPlayers = () => {
           ))}
         </TableBody>
       </Table>
+      <TablePagination
+        rowsPerPageOptions={[]}
+        component="div"
+        count={teamPlayers.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+      />
     </TableContainer>
   );
 };
