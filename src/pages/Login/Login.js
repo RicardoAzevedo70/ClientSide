@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Typography, TextField, Button, Container, Grid, Snackbar } from '@material-ui/core';
+import { Typography, TextField, Button, Container, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Logo2 from './../../img/logoSemFundo.jpeg'
+import Logo from './../../img/logoSemFundo.jpeg'
 import UserService from './../../services/UserServices';
 import { useUser } from '../../providers/UserProvider';
 import { useTeam } from '../../providers/TeamProvider';
@@ -57,7 +57,7 @@ const LoginForm = () => {
 
   const getUserInformation = async () => {
     try {
-      const response = await UserService.getUserInformation("Josecid@gmail.com"); //userInformation.email
+      const response = await UserService.getUserInformation(userInformation.email);
       if (response) {
         setUserDataInformation(response.message)
         console.log(response)
@@ -70,7 +70,7 @@ const LoginForm = () => {
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
       <div style={{ flex: '70%', backgroundColor: '#F8F8F8', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <img src={Logo2} alt='logotipo' style={{ width: '40%' }} />
+        <img src={Logo} alt='logotipo' style={{ width: '40%' }} />
       </div>
       <div style={{ flex: '30%', backgroundColor: '#4F6D8F', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Container maxWidth="xs" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '25px' }}>
@@ -102,7 +102,7 @@ const LoginForm = () => {
                 />
               </Grid>
             </Grid>
-            <Button variant="contained" color="#F8F8F8" fullWidth onClick={handleLogin}>
+            <Button variant="contained" fullWidth onClick={handleLogin}> {/*color="#F8F8F8"*/}
               Login
             </Button>
           </form>

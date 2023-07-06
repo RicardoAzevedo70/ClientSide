@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, IconButton, Fab, TablePagination } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, IconButton, Fab, TablePagination } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 import { useTeam } from '../../../providers/TeamProvider';
 import AddPlayer from './ModalAddPlayer';
 import DeletePlayer from './ModalDeletePlayer';
 
-const useStyles = makeStyles({
+const useStyles = {
   tableContainer: {
     maxWidth: '85%',
     margin: '0 auto',
@@ -42,10 +41,9 @@ const useStyles = makeStyles({
     backgroundColor: '#4F6D8F',
     color: 'white'
   },
-});
+};
 
 const TeamManagement = () => {
-  const classes = useStyles();
   const [openAddPlayer, setOpenAddPlayer] = useState(false);
   const [openDeletePlayer, setOpenDeletePlayer] = useState(false);
   const [playerToDelete, setPlayerToDelete] = useState("");
@@ -77,30 +75,30 @@ const TeamManagement = () => {
 
   return (
     <>
-      <TableContainer component={Paper} className={classes.tableContainer}>
-        <Fab color="primary" aria-label="add" className={classes.addButton} onClick={handleAdd}>
+      <TableContainer component={Paper} sx={useStyles.tableContainer}>
+        <Fab color="primary" aria-label="add" sx={useStyles.addButton} onClick={handleAdd}>
           <AddIcon />
         </Fab>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell className={classes.photoCell}>Photo</TableCell>
-              <TableCell className={classes.homeTeamCell}>Name</TableCell>
-              <TableCell className={classes.photoCell}></TableCell>
+              <TableCell sx={useStyles.photoCell}>Photo</TableCell>
+              <TableCell sx={useStyles.homeTeamCell}>Name</TableCell>
+              <TableCell sx={useStyles.photoCell}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {(teamPlayers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)).map((person) => (
               <TableRow key={person.id}>
-                <TableCell className={classes.photoRowCell}>
-                  <Avatar alt={person.name} src={person.avatarUrl} className={classes.avatar} />
+                <TableCell sx={useStyles.photoRowCell}>
+                  <Avatar alt={person.name} src={person.avatarUrl} sx={useStyles.avatar} />
                 </TableCell>
                 <TableCell>{person.name}</TableCell>
-                <TableCell className={classes.deleteCell}>
+                <TableCell sx={useStyles.deleteCell}>
                   <IconButton
                     aria-label="delete"
                     onClick={() => handleDelete(person.id)}
-                    className={classes.deleteIcon}
+                    sx={useStyles.deleteIcon}
                   >
                     <DeleteIcon />
                   </IconButton>

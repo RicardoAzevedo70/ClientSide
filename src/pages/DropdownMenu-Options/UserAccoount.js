@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Grid, Select, MenuItem, InputLabel } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Grid, Select, MenuItem, InputLabel } from '@mui/material';
 import { useUser } from '../../providers/UserProvider';
 import UserService from '../../services/UserServices';
 import { useTeam } from '../../providers/TeamProvider';
 import { useComponents } from '../../providers/ComponentsProvider';
 import PropTypes from 'prop-types';
+import FormControl from '@mui/material/FormControl';
+
 
 const ProfileModal = ({ open, onClose }) => {
   const { userDataInformation, setUserDataInformation } = useUser();
@@ -93,19 +95,21 @@ const ProfileModal = ({ open, onClose }) => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <InputLabel>Country</InputLabel>
-            <Select
-              name="country"
-              value={formData.country || userDataInformation.country}
-              onChange={handleInputChange}
-              fullWidth
-            >
-              {countries.map((country) => (
-                <MenuItem key={country} value={country}>
-                  {country}
-                </MenuItem>
-              ))}
-            </Select>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Country</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                name="country"
+                value={formData.country || userDataInformation.country}
+                onChange={handleInputChange}
+              >
+                {countries.map((country) => (
+                  <MenuItem key={country} value={country}>
+                    {country}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={12}>
             <TextField

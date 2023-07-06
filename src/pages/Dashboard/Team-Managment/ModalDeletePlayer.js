@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Dialog, DialogTitle, DialogActions} from '@material-ui/core';
+import { Button, Dialog, DialogTitle, DialogActions} from '@mui/material';
 import TeamService from '../../../services/TeamService';
 import { useUser } from '../../../providers/UserProvider';
 import { useTeam } from '../../../providers/TeamProvider';

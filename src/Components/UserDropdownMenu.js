@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { IconButton, Menu, MenuItem } from '@material-ui/core';
-import { AccountCircle, ArrowDropDown } from '@material-ui/icons';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import { AccountCircle, ArrowDropDown } from '@mui/icons-material';
 import LogoutApp from '../pages/DropdownMenu-Options/Logout';
 import ProfileModal from '../pages/DropdownMenu-Options/UserAccoount';
 import PropTypes from 'prop-types';

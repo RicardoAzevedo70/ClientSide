@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
-import { Menu, SportsFootball } from '@material-ui/icons';
+import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
+import { Menu, SportsFootball } from '@mui/icons-material';
 import UserDropdownMenu from './UserDropdownMenu';
 import Sidebar from './Sidebar';
 import ModalSelectTeam from '../pages/Select-Team/ModalSelectTeam'
@@ -42,7 +42,7 @@ const TopBar = () => {
             </Typography>
           </div>
           <div style={{ marginLeft: 'auto' }}>
-            <UserDropdownMenu username={userDataInformation.name} />
+            <UserDropdownMenu username={userDataInformation.fullname} />
           </div>
         </Toolbar>
       </AppBar>

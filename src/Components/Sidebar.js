@@ -1,21 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography, makeStyles } from '@material-ui/core';
-import { Group, Settings, SportsFootball, ChevronRight } from '@material-ui/icons';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography} from '@mui/material';
+import { Group, Settings, SportsFootball, ChevronRight } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = {
   listItem: {
     display: 'flex',
     alignItems: 'center',
   },
   listItemText: {
-    marginRight: '70px', // Espaço entre o texto e a seta
+    marginRight: '70px', 
   },
-}));
+};
 
 const Sidebar = ({ open, setOpen }) => {
-  const classes = useStyles();
 
   const handleCloseSidebar = () => {
     setOpen(false);
@@ -25,32 +24,32 @@ const Sidebar = ({ open, setOpen }) => {
     <Drawer variant="temporary" anchor="left" open={open} onClose={handleCloseSidebar}>
       <Typography variant="h6" align="center" style={{ marginBottom: '10px', backgroundColor: '#4F6D8F', color: 'white', padding: '10px', height: '50px' }}>Menu</Typography>
       <List>
-        <ListItem button component={Link} to="/team/team-players" className={classes.listItem}>
+        <ListItem button component={Link} to="/team/team-players" sx={useStyles.listItem}>
           <ListItemIcon>
             <Group />
           </ListItemIcon>
           <ListItemText
-            primaryTypographyProps={{ className: classes.listItemText }}
+            primaryTypographyProps={{ sx: useStyles.listItemText }}
             primary="See Team Players"
           />
           <ChevronRight />
         </ListItem>
-        <ListItem button component={Link} to="/team/team-managment" className={classes.listItem}>
+        <ListItem button component={Link} to="/team/team-managment" sx={useStyles.listItem}>
           <ListItemIcon>
             <Settings />
           </ListItemIcon>
           <ListItemText
-            primaryTypographyProps={{ className: classes.listItemText }}
+            primaryTypographyProps={{ sx: useStyles.listItemText }}
             primary="Team Management"
           />
           <ChevronRight />
         </ListItem>
-        <ListItem button component={Link} to="/team/team-games" className={classes.listItem}>
+        <ListItem button component={Link} to="/team/team-games" sx={useStyles.listItem}>
           <ListItemIcon>
             <SportsFootball />
           </ListItemIcon>
           <ListItemText
-            primaryTypographyProps={{ className: classes.listItemText }}
+            primaryTypographyProps={{ sx: useStyles.listItemText }}
             primary="My Team Games"
           />
           <ChevronRight />

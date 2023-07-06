@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, TablePagination } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, TablePagination } from '@mui/material';
 import { useTeam } from '../../../providers/TeamProvider';
 
-const useStyles = makeStyles({
+const useStyles = { 
   tableContainer: {
     maxWidth: '80%',
     margin: '0 auto',
@@ -25,12 +24,11 @@ const useStyles = makeStyles({
   photoRowCell: {
     width: '200px',
   },
-});
+};
 
 const rowsPerPage = 8;
 
 const TeamPlayers = () => {
-  const classes = useStyles();
   const { teamPlayers } = useTeam();
 
   const [page, setPage] = useState(0);
@@ -38,21 +36,21 @@ const TeamPlayers = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
+  
   return (
-    <TableContainer component={Paper} className={classes.tableContainer}>
+    <TableContainer component={Paper} sx={useStyles.tableContainer}> 
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell className={classes.photoCell}>Photo</TableCell>
-            <TableCell className={classes.homeTeamCell}>Name</TableCell>
+            <TableCell sx={useStyles.photoCell}>Photo</TableCell>
+            <TableCell sx={useStyles.homeTeamCell}>Name</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {(teamPlayers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)).map((person) => (
             <TableRow key={person.id}>
-              <TableCell className={classes.photoRowCell}>
-                <Avatar alt={person.name} src={person.avatarUrl} className={classes.avatar} />
+              <TableCell sx={useStyles.photoRowCell}>
+                <Avatar alt={person.name} src={person.avatarUrl} sx={useStyles.avatar} />
               </TableCell>
               <TableCell>{person.name}</TableCell>
             </TableRow>
